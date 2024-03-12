@@ -51,7 +51,7 @@ find_package(PythonInterp 3 REQUIRED)
 if(ROS_DISTRO IN_LIST ROS_DISTROS)
   find_package(eigen3_cmake_module REQUIRED)
 endif()
-find_package(Eigen3 REQUIRED NO_MODULE)
+find_package(Eigen3 REQUIRED)
 
 ###################################
 # Generate micro-RTPS agent code ##
@@ -79,13 +79,13 @@ endfunction()
 
 # Add frame_transforms lib
 add_library(frame_transforms SHARED src/lib/frame_transforms.cpp)
-ament_target_dependencies(frame_transforms Eigen3 geometry_msgs sensor_msgs)
+ament_target_dependencies(frame_transforms geometry_msgs sensor_msgs)
 target_include_directories(frame_transforms PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/${PROJECT_NAME}>
   $<INSTALL_INTERFACE:include/${PROJECT_NAME}>
-  ${Eigen3_INCLUDE_DIRS}
+  # ${Eigen3_INCLUDE_DIRS}
 )
-target_link_libraries(frame_transforms Eigen3::Eigen ${geometry_msgs_LIBRARIES} ${sensor_msgs_LIBRARIES})
+target_link_libraries(frame_transforms Eigen3::Eigen)
 
 # Add microRTPS agent
 add_executable(micrortps_agent ${MICRORTPS_AGENT_FILES})
@@ -93,10 +93,10 @@ ament_target_dependencies(micrortps_agent fastcdr fastrtps rclcpp)
 target_link_libraries(micrortps_agent fastcdr fastrtps ${rclcpp_LIBRARIES})
 
 # Add examples
-custom_executable(examples/listeners sensor_combined_listener)
-custom_executable(examples/listeners vehicle_gps_position_listener)
-custom_executable(examples/advertisers debug_vect_advertiser)
-custom_executable(examples/offboard offboard_control)
+# custom_executable(examples/listeners sensor_combined_listener)
+# custom_executable(examples/listeners vehicle_gps_position_listener)
+# custom_executable(examples/advertisers debug_vect_advertiser)
+# custom_executable(examples/offboard offboard_control)
 
 ############
 # Install ##
