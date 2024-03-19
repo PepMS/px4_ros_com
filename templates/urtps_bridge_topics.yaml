@@ -8,17 +8,17 @@ rtps:
     receive: true
     send: true
   - msg: VehicleLocalPosition
+    send: true
     poll: true
     poll_interval: 2
-    send: true
   - msg: VehicleAttitude
+    send: true
     poll: true
     poll_interval: 2
-    send: true
   - msg: VehicleAngularVelocity
+    send: true
     poll: true
     poll_interval: 2
-    send: true
   - msg: VehicleControlMode
     send: true
   - msg: VehicleCommand
@@ -29,11 +29,10 @@ rtps:
     receive: true
   - msg: VehicleLocalPositionSetpoint
     receive: true
-  - base: VehicleLocalPositionSetpoint
-    msg: TrajectorySetpoint
+  - msg: TrajectorySetpoint
+    base: VehicleLocalPositionSetpoint
     receive: true
   - msg: VehicleLandDetected
     send: true
   - msg: BatteryStatus
     send: true
-
